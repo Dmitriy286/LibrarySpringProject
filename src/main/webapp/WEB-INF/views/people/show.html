@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
+    <title>Reader</title>
+</head>
+<body>
+<div th:text="${person.getFullName() + ', ' + person.getYearOfBirth()}"></div>
+<br>
+<div>Человек пока не взял ни одной книги</div>
+<br>
+<div th:if="${person.getFullName().equals('Tom')}">
+    <h3>Книги:</h3>
+    <p>День опричника, Владимир Сорокин, 2006</p>
+    <p>Тайные виды на гору Фудзи, Виктор Пелевин, 2018</p>
+
+</div>
+<br>
+<hr>
+<form th:action="@{/people/{id}/edit(id=${person.getPersonId()})}">
+    <button>Редактировать</button>
+</form>
+<br>
+<form th:method="DELETE" th:action="@{/people/{id}/delete(id=${person.getPersonId()})}">
+    <button>Удалить</button>
+</form>
+
+</body>
+</html>
