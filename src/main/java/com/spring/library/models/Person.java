@@ -1,7 +1,7 @@
 package com.spring.library.models;
 
 public class Person {
-    private int id;
+    private int personId;
     private String fullName;
     private int yearOfBirth;
 
@@ -9,17 +9,23 @@ public class Person {
 
     }
 
+    public Person(int personId, String fullName, int yearOfBirth) {
+        this.personId = personId;
+        this.fullName = fullName;
+        this.yearOfBirth = yearOfBirth;
+    }
+
     public Person(String fullName, int yearOfBirth) {
         this.fullName = fullName;
         this.yearOfBirth = yearOfBirth;
     }
 
-    public int getId() {
-        return id;
+    public int getPersonId() {
+        return personId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setPersonId(int personId) {
+        this.personId = personId;
     }
 
     public String getFullName() {
@@ -30,11 +36,16 @@ public class Person {
         this.fullName = fullName;
     }
 
-    public int getDateOfBirth() {
+    public int getYearOfBirth() {
         return yearOfBirth;
     }
 
-    public void setDateOfBirth(int dateOfBirth) {
-        this.yearOfBirth = dateOfBirth;
+    public void setYearOfBirth(int yearOfBirth) {
+        this.yearOfBirth = yearOfBirth;
+    }
+
+    @Override
+    public String toString() {
+        return getPersonId() + ", " + getFullName() + ", " + getYearOfBirth();
     }
 }
