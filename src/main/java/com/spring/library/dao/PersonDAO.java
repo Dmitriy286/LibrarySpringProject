@@ -1,5 +1,6 @@
 package com.spring.library.dao;
 
+import com.spring.library.models.Book;
 import com.spring.library.models.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -8,6 +9,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Component
 public class PersonDAO {
@@ -51,4 +54,19 @@ public class PersonDAO {
         jdbcTemplate.update("DELETE FROM person WHERE person_id=?", id);
     }
 
+//    public Optional<List<Book>> getPersonBooks(int id) {
+//        List<Book> books = jdbcTemplate.query("SELECT name, author, year FROM book WHERE person_id=?",
+//                        new Object[]{id},
+//                        new BeanPropertyRowMapper<>(Book.class));
+//        return Optional.of(books);
+//    }
+
+    public List<Book> getPersonBooks(int id) {
+        List<Book> books = jdbcTemplate.query("SELECT name, author, year FROM book WHERE person_id=?",
+                new Object[]{id},
+                new BeanPropertyRowMapper<>(Book.class));
+        System.out.println("Books list lenth:");
+        System.out.println(books.size());
+        return books;
+    }
 }
