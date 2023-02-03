@@ -20,7 +20,7 @@ public class PersonDAO {
 
     public List<Person> findAll() {
         System.out.println("findall");
-        List<Person> people = new ArrayList<>();
+        List<Person> people;
         people = jdbcTemplate.query("SELECT * FROM person", new BeanPropertyRowMapper<>(Person.class));
 //        for (Person p : people) {
 //            System.out.println(p);
