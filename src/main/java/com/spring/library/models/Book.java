@@ -1,7 +1,8 @@
 package com.spring.library.models;
 
 public class Book {
-    private int id;
+    private int bookId;
+    private int personId;
     private String name;
     private String author;
     private int year;
@@ -10,18 +11,33 @@ public class Book {
 
     }
 
+    public Book(int personId, String name, String author, int year) {
+        this.personId = personId;
+        this.name = name;
+        this.author = author;
+        this.year = year;
+    }
+
     public Book(String name, String author, int year) {
         this.name = name;
         this.author = author;
         this.year = year;
     }
 
-    public int getId() {
-        return id;
+    public int getBookId() {
+        return bookId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setBookId(int bookId) {
+        this.bookId = bookId;
+    }
+
+    public int getPersonId() {
+        return personId;
+    }
+
+    public void setPersonId(int personId) {
+        this.personId = personId;
     }
 
     public String getName() {
@@ -46,5 +62,10 @@ public class Book {
 
     public void setYear(int year) {
         this.year = year;
+    }
+
+    @Override
+    public String toString() {
+        return getBookId() + ", " + getName();
     }
 }

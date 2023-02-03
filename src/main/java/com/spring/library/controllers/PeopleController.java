@@ -20,14 +20,14 @@ public class PeopleController {
     }
 
     @GetMapping()
-    public String showAll(Model model) {
+    public String showAllPeople(Model model) {
         List<Person> people = personDAO.findAll();
         model.addAttribute("people", people);
         return "people/show-all";
     }
 
     @GetMapping("/{id}")
-    public String show(@PathVariable("id") int id, Model model) {
+    public String showPerson(@PathVariable("id") int id, Model model) {
         Person person = personDAO.findById(id);
         model.addAttribute("person", person);
         return "people/show";
@@ -39,7 +39,7 @@ public class PeopleController {
     }
 
     @PostMapping()
-    public String newPerson(@ModelAttribute("person") Person person) {
+    public String createPerson(@ModelAttribute("person") Person person) {
         System.out.println(person);
         personDAO.save(person);
         return "redirect:/people";
