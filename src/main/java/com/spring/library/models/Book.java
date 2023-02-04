@@ -2,16 +2,29 @@ package com.spring.library.models;
 
 public class Book {
     private int bookId;
-    private int personId;
+    private Integer personId;
     private String name;
     private String author;
     private int year;
+
 
     public Book() {
 
     }
 
-    public Book(int personId, String name, String author, int year) {
+    public Book(int bookId, Integer personId, String name, String author, int year) {
+        this.bookId = bookId;
+        if (personId == null) {
+            this.personId = 0;
+        } else {
+            this.personId = personId;
+        }
+        this.name = name;
+        this.author = author;
+        this.year = year;
+    }
+
+    public Book(Integer personId, String name, String author, int year) {
         this.personId = personId;
         this.name = name;
         this.author = author;
@@ -36,8 +49,12 @@ public class Book {
         return personId;
     }
 
-    public void setPersonId(int personId) {
-        this.personId = personId;
+    public void setPersonId(Integer personId) {
+        if (personId == null) {
+            this.personId = 0;
+        } else {
+            this.personId = personId;
+        }
     }
 
     public String getName() {
@@ -66,6 +83,7 @@ public class Book {
 
     @Override
     public String toString() {
-        return getBookId() + ", " + getName();
+        int persId = this.personId == null ? 0 : getPersonId();
+        return getBookId() + ", " + persId + ", " + getName();
     }
 }
