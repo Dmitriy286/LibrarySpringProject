@@ -4,9 +4,11 @@ import com.spring.library.dao.BookDAO;
 import com.spring.library.dao.PersonDAO;
 import com.spring.library.models.Book;
 import com.spring.library.models.Person;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -55,7 +57,11 @@ public class BooksController {
     }
 
     @PostMapping()
-    public String createBook(@ModelAttribute("book") Book book) {
+    public String createBook(@ModelAttribute("book") @Valid Book book,
+                             BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "books/new";
+        }
         System.out.println("Controller:");
         System.out.println(book);
         bookDAO.save(book);

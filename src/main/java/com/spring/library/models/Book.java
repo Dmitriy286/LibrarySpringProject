@@ -1,10 +1,19 @@
 package com.spring.library.models;
 
+import javax.validation.constraints.*;
+
 public class Book {
     private int bookId;
     private Integer personId;
+
+    @NotEmpty(message = "Введите название книги")
+    @Size(min = 1, max = 50, message = "Название книги должно содержать от 1 до 50 символов")
     private String name;
+    @NotEmpty(message = "Введите имя автора")
+    @Size(min = 2, max = 50, message = "Имя автора должно содержать от 2 до 50 символов")
     private String author;
+    @Min(value = 1452, message = "Рукописные издания допечатной эры не хранятся в нашей библиотеке")
+    @Max(value = 2023, message = "Введите год до 2023")
     private int year;
 
 
