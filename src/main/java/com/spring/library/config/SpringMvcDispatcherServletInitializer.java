@@ -7,9 +7,11 @@ import org.springframework.web.filter.HiddenHttpMethodFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 
+import javax.servlet.DispatcherType;
 import javax.servlet.FilterRegistration;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import java.util.EnumSet;
 
 public class SpringMvcDispatcherServletInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
@@ -32,15 +34,8 @@ public class SpringMvcDispatcherServletInitializer extends AbstractAnnotationCon
     @Override
     public void onStartup(ServletContext servletContext) throws ServletException {
         super.onStartup(servletContext);
+        registerCharacterEncodingFilter(servletContext);
         registerHiddenFieldFilter(servletContext);
-
-        CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
-        characterEncodingFilter.setEncoding("UTF-8");
-        characterEncodingFilter.setForceEncoding(true);
-
-        FilterRegistration.Dynamic filterRegistration = servletContext
-                .addFilter("characterEncodingFilter", characterEncodingFilter);
-        filterRegistration.addMappingForUrlPatterns(null, false, "/*");
     }
 
     private void registerHiddenFieldFilter(ServletContext servletContext) {
@@ -51,5 +46,17 @@ public class SpringMvcDispatcherServletInitializer extends AbstractAnnotationCon
     @Bean
     HiddenHttpMethodFilter hiddenHttpMethodFilter() {
         return new HiddenHttpMethodFilter();
+    }
+
+    private void registerCharacterEncodingFilter(ServletContext servletContext) {
+        EnumSet<DispatcherType> dispatcherTypes = EnumSet.of(DispatcherType.REQUEST, DispatcherType.FORWARD);
+
+        CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
+        characterEncodingFilter.setEncoding("UTF-8");
+        characterEncodingFilter.setForceEncoding(true);
+
+        FilterRegistration.Dynamic filterRegistration = servletContext
+                .addFilter("characterEncodingFilter", characterEncodingFilter);
+        filterRegistration.addMappingForUrlPatterns(dispatcherTypes, true, "/*");
     }
 }

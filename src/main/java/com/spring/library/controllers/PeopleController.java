@@ -1,13 +1,17 @@
 package com.spring.library.controllers;
 
 import com.spring.library.dao.PersonDAO;
+import com.spring.library.models.Book;
 import com.spring.library.models.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/people")
@@ -20,16 +24,18 @@ public class PeopleController {
     }
 
     @GetMapping()
-    public String showAll(Model model) {
+    public String showAllPeople(Model model) {
         List<Person> people = personDAO.findAll();
         model.addAttribute("people", people);
         return "people/show-all";
     }
 
     @GetMapping("/{id}")
-    public String show(@PathVariable("id") int id, Model model) {
+    public String showPerson(@PathVariable("id") int id, Model model) {
         Person person = personDAO.findById(id);
+       List<Book> books = personDAO.getPersonBooks(id);
         model.addAttribute("person", person);
+        model.addAttribute("books", books);
         return "people/show";
     }
 
@@ -39,7 +45,11 @@ public class PeopleController {
     }
 
     @PostMapping()
-    public String newPerson(@ModelAttribute("person") Person person) {
+    public String createPerson(@ModelAttribute("person") @Valid Person person,
+                               BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "people/new";
+        }
         System.out.println(person);
         personDAO.save(person);
         return "redirect:/people";
@@ -53,7 +63,11 @@ public class PeopleController {
     }
 
     @PostMapping("/{id}")
-    public String editPerson(@PathVariable("id") int id, @ModelAttribute("person") Person person) {
+    public String editPerson(@PathVariable("id") int id, @ModelAttribute("person") @Valid Person person,
+                             BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "people/edit";
+        }
         System.out.println(person);
         personDAO.update(id, person);
         return "redirect:/people";

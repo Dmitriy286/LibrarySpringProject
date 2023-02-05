@@ -1,8 +1,16 @@
 package com.spring.library.models;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Pattern;
+import java.util.Date;
+
 public class Person {
     private int personId;
+    @Pattern(regexp = "(?U)[А-Я]\\w+ (?U)[А-Я]\\w+ (?U)[А-Я]\\w+", message = "Должно соответствовать шаблону: Фамилия Имя Отчество")
     private String fullName;
+    @Min(value = 1900)
+    @Max(value = 2013, message = "В библиотеке можно регистрировать лиц только старше 10 лет")
     private int yearOfBirth;
 
     public Person() {

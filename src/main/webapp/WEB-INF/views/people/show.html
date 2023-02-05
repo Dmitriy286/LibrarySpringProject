@@ -7,12 +7,13 @@
 <body>
 <div th:text="${person.getFullName() + ', ' + person.getYearOfBirth()}"></div>
 <br>
-<div>Человек пока не взял ни одной книги</div>
-<br>
-<div th:if="${person.getFullName().equals('Tom')}">
+<hr th:if="${books.size() == 0}">
+<div th:if="${books.size() == 0}">Человек пока не взял ни одной книги</div>
+<div th:if="${books.size() > 0}">
     <h3>Книги:</h3>
-    <p>День опричника, Владимир Сорокин, 2006</p>
-    <p>Тайные виды на гору Фудзи, Виктор Пелевин, 2018</p>
+    <div th:each="book : ${books}">
+        <div th:text="${book.getName() + ', ' + book.getAuthor() + ', ' + book.getYear()}"></div>
+    </div>
 
 </div>
 <br>
