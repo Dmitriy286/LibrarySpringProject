@@ -5,6 +5,8 @@ import com.spring.library.dao.PersonDAO;
 import com.spring.library.models.Book;
 import com.spring.library.models.Person;
 import javax.validation.Valid;
+
+import com.spring.library.util.BookValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,11 +21,13 @@ public class BooksController {
 
     private final BookDAO bookDAO;
     private final PersonDAO personDAO;
+    private final BookValidator bookValidator;
 
     @Autowired
-    public BooksController(BookDAO bookDAO, PersonDAO personDAO) {
+    public BooksController(BookDAO bookDAO, PersonDAO personDAO, BookValidator bookValidator) {
         this.bookDAO = bookDAO;
         this.personDAO = personDAO;
+        this.bookValidator = bookValidator;
     }
 
     @GetMapping()
@@ -59,6 +63,7 @@ public class BooksController {
     @PostMapping()
     public String createBook(@ModelAttribute("book") @Valid Book book,
                              BindingResult bindingResult) {
+        bookValidator.validate(book, bindingResult);
         if (bindingResult.hasErrors()) {
             return "books/new";
         }

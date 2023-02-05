@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class BookDAO {
@@ -36,6 +37,11 @@ public class BookDAO {
                 stream().findAny().orElse(null);
         System.out.println(book);
         return book;
+    }
+
+    public Optional<Book> findByNameAndYear(String bookName, int year) {
+        return jdbcTemplate.query("SELECT * FROM book WHERE name = ? AND year = ?", new Object[]{bookName, year},
+                new BeanPropertyRowMapper<>(Book.class)).stream().findAny();
     }
 
     public void save(Book book) {
