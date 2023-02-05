@@ -81,7 +81,12 @@ public class BooksController {
     }
 
     @PostMapping("/{id}")
-    public String editBook(@PathVariable("id") int id, @ModelAttribute("book") Book book) {
+    public String editBook(@PathVariable("id") int id, @ModelAttribute("book") @Valid Book book,
+                           BindingResult bindingResult) {
+        bookValidator.validate(book, bindingResult);
+        if (bindingResult.hasErrors()) {
+            return "books/edit";
+        }
         bookDAO.update(id, book);
         return "redirect:/books";
     }
