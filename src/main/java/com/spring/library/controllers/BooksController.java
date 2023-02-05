@@ -4,9 +4,13 @@ import com.spring.library.dao.BookDAO;
 import com.spring.library.dao.PersonDAO;
 import com.spring.library.models.Book;
 import com.spring.library.models.Person;
+import javax.validation.Valid;
+
+import com.spring.library.util.BookValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,11 +21,13 @@ public class BooksController {
 
     private final BookDAO bookDAO;
     private final PersonDAO personDAO;
+    private final BookValidator bookValidator;
 
     @Autowired
-    public BooksController(BookDAO bookDAO, PersonDAO personDAO) {
+    public BooksController(BookDAO bookDAO, PersonDAO personDAO, BookValidator bookValidator) {
         this.bookDAO = bookDAO;
         this.personDAO = personDAO;
+        this.bookValidator = bookValidator;
     }
 
     @GetMapping()
@@ -55,7 +61,12 @@ public class BooksController {
     }
 
     @PostMapping()
-    public String createBook(@ModelAttribute("book") Book book) {
+    public String createBook(@ModelAttribute("book") @Valid Book book,
+                             BindingResult bindingResult) {
+        bookValidator.validate(book, bindingResult);
+        if (bindingResult.hasErrors()) {
+            return "books/new";
+        }
         System.out.println("Controller:");
         System.out.println(book);
         bookDAO.save(book);
@@ -70,7 +81,12 @@ public class BooksController {
     }
 
     @PostMapping("/{id}")
-    public String editBook(@PathVariable("id") int id, @ModelAttribute("book") Book book) {
+    public String editBook(@PathVariable("id") int id, @ModelAttribute("book") @Valid Book book,
+                           BindingResult bindingResult) {
+        bookValidator.validate(book, bindingResult);
+        if (bindingResult.hasErrors()) {
+            return "books/edit";
+        }
         bookDAO.update(id, book);
         return "redirect:/books";
     }
