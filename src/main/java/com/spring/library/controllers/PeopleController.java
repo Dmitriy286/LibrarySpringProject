@@ -3,6 +3,7 @@ package com.spring.library.controllers;
 import com.spring.library.dao.PersonDAO;
 import com.spring.library.models.Book;
 import com.spring.library.models.Person;
+import com.spring.library.util.PersonValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,16 +12,17 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/people")
 public class PeopleController {
     private final PersonDAO personDAO;
+    private final PersonValidator personValidator;
 
     @Autowired
-    public PeopleController(PersonDAO personDAO) {
+    public PeopleController(PersonDAO personDAO, PersonValidator personValidator) {
         this.personDAO = personDAO;
+        this.personValidator = personValidator;
     }
 
     @GetMapping()
@@ -33,7 +35,7 @@ public class PeopleController {
     @GetMapping("/{id}")
     public String showPerson(@PathVariable("id") int id, Model model) {
         Person person = personDAO.findById(id);
-       List<Book> books = personDAO.getPersonBooks(id);
+        List<Book> books = personDAO.getPersonBooks(id);
         model.addAttribute("person", person);
         model.addAttribute("books", books);
         return "people/show";
@@ -47,6 +49,7 @@ public class PeopleController {
     @PostMapping()
     public String createPerson(@ModelAttribute("person") @Valid Person person,
                                BindingResult bindingResult) {
+        personValidator.validate(person, bindingResult);
         if (bindingResult.hasErrors()) {
             return "people/new";
         }
@@ -65,6 +68,7 @@ public class PeopleController {
     @PostMapping("/{id}")
     public String editPerson(@PathVariable("id") int id, @ModelAttribute("person") @Valid Person person,
                              BindingResult bindingResult) {
+        personValidator.validate(person, bindingResult);
         if (bindingResult.hasErrors()) {
             return "people/edit";
         }

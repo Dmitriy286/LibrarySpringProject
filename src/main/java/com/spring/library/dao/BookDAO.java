@@ -39,8 +39,9 @@ public class BookDAO {
         return book;
     }
 
-    public Optional<Book> findByNameAndYear(String bookName, int year) {
-        return jdbcTemplate.query("SELECT * FROM book WHERE name = ? AND year = ?", new Object[]{bookName, year},
+    public Optional<Book> findByNameAuthorAndYear(String bookName, String author, int year) {
+        return jdbcTemplate.query("SELECT * FROM book WHERE name = ? AND author = ? AND year = ?",
+                new Object[]{bookName, author, year},
                 new BeanPropertyRowMapper<>(Book.class)).stream().findAny();
     }
 

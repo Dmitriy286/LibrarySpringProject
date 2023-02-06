@@ -1,4 +1,4 @@
-#Библиотечная CRM система
+# Библиотечная CRM система
 
 Стэк: Java, Spring Core, Spring MVC, Spring JDBC Template, Spring Validator, Hibernate Validator, PostgreSQL, Thymeleaf, html
 
@@ -9,4 +9,4 @@
 
 Информация обо всех читателях и книгах содержится в базе данных.
 
-
+Данные на формах валидируются.

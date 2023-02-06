@@ -22,12 +22,8 @@ public class PersonDAO {
     }
 
     public List<Person> findAll() {
-        System.out.println("findall from PersonDAO");
         List<Person> people;
         people = jdbcTemplate.query("SELECT * FROM person", new BeanPropertyRowMapper<>(Person.class));
-//        for (Person p : people) {
-//            System.out.println(p);
-//        }
         return people;
     }
 
@@ -58,8 +54,6 @@ public class PersonDAO {
         List<Book> books = jdbcTemplate.query("SELECT name, author, year FROM book WHERE person_id=?",
                 new Object[]{id},
                 new BeanPropertyRowMapper<>(Book.class));
-        System.out.println("Books list lenth:");
-        System.out.println(books.size());
         return books;
     }
 }

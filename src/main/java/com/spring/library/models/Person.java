@@ -1,27 +1,26 @@
 package com.spring.library.models;
 
+import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Pattern;
-import java.util.Date;
 
 public class Person {
     private int personId;
     @Pattern(regexp = "(?U)[А-Я]\\w+ (?U)[А-Я]\\w+ (?U)[А-Я]\\w+", message = "Должно соответствовать шаблону: Фамилия Имя Отчество")
     private String fullName;
-    @Min(value = 1900)
-    @Max(value = 2013, message = "В библиотеке можно регистрировать лиц только старше 10 лет")
+    @Min(value = 1900, message = "Год рождения должен быть больше чем 1900")
     private int yearOfBirth;
 
     public Person() {
 
     }
 
-    public Person(int personId, String fullName, int yearOfBirth) {
-        this.personId = personId;
-        this.fullName = fullName;
-        this.yearOfBirth = yearOfBirth;
-    }
+//    public Person(int personId, String fullName, int yearOfBirth) {
+//        this.personId = personId;
+//        this.fullName = fullName;
+//        this.yearOfBirth = yearOfBirth;
+//    }
 
     public Person(String fullName, int yearOfBirth) {
         this.fullName = fullName;
