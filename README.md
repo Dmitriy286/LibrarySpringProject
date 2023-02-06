@@ -1,6 +1,13 @@
 # Библиотечная CRM система
-
-Стэк: Java, Spring Core, Spring MVC, Spring JDBC Template, Spring Validator, Hibernate Validator, PostgreSQL, Thymeleaf, html
+Стэк: 
+- Java
+- Spring Core
+- Spring MVC
+- Spring JDBC Template
+- Spring, Hibernate Validators
+- PostgreSQL
+- Thymeleaf
+- html
 
 Система позволяет добавлять, редактировать и удалять читателей и книги.
 Для каждой книги есть возможность назначить читателя.
