@@ -24,7 +24,7 @@ public class BookValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         Book book = (Book) target;
-        if (bookDAO.findByNameAndYear(book.getName(), book.getYear()).isPresent()) {
+        if (bookDAO.findByNameAuthorAndYear(book.getName(), book.getAuthor(), book.getYear()).isPresent()) {
             errors.rejectValue("name", "", "Такая книга уже зарегистрирована в библиотечной системе");
         }
     }

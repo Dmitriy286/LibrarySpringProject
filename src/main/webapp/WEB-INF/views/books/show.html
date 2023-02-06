@@ -2,15 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
-    <title>Book</title>
+    <title>Книга</title>
 </head>
 <body>
-<div th:text="${book.getName() + ', ' + book.getAuthor() + ', ' + book.getYear() + ', ' + book.getPersonId()}"></div>
+<h2 th:text="${book.getName() + ', ' + book.getAuthor() + ', ' + book.getYear()}"></h2>
 <br>
 <div th:switch="${book.getPersonId()}">
     <div th:case="0">
 <!--        <div th:if="${book.getPersonId() == 0}">-->
-        <p>Эта книга свободна. Кому назначить ее?</p>
+        <span>Эта книга свободна. Кому назначить ее?</span>
         <form th:method="PATCH" th:action="@{/books/{id}/setbook(id=${book.getBookId()})}">
             <label for="person">Выберите человека</label>
             <select th:object="${emptyPerson}" id="person" th:field="*{personId}">
@@ -34,11 +34,11 @@
 <br>
 <hr>
 <form th:action="@{/books/{id}/edit(id=${book.getBookId()})}">
-    <button>Edit</button>
+    <button>Редактировать</button>
 </form>
 <br>
 <form th:method="DELETE" th:action="@{/books/{id}/delete(id=${book.getBookId()})}">
-    <button>Delete</button>
+    <button>Удалить</button>
 </form>
 <br>
 <hr>

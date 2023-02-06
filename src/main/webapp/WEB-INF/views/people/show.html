@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
-    <title>Reader</title>
+    <title>Читатель</title>
 </head>
 <body>
-<div th:text="${person.getFullName() + ', ' + person.getYearOfBirth()}"></div>
+<h2 th:text="${person.getFullName() + ', ' + person.getYearOfBirth()}"></h2>
 <br>
-<hr th:if="${books.size() == 0}">
-<div th:if="${books.size() == 0}">Человек пока не взял ни одной книги</div>
-<div th:if="${books.size() > 0}">
+<hr th:if="${books.isEmpty()}">
+<div th:if="${books.isEmpty()}">Человек пока не взял ни одной книги</div>
+<div th:if="${!books.isEmpty()}">
     <h3>Книги:</h3>
     <div th:each="book : ${books}">
         <div th:text="${book.getName() + ', ' + book.getAuthor() + ', ' + book.getYear()}"></div>
