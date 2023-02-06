@@ -22,17 +22,16 @@ public class PersonDAO {
     }
 
     public List<Person> findAll() {
-        List<Person> people;
-        people = jdbcTemplate.query("SELECT * FROM person", new BeanPropertyRowMapper<>(Person.class));
+        List<Person> people = jdbcTemplate.query("SELECT * FROM person", new BeanPropertyRowMapper<>(Person.class));
+
         return people;
     }
 
 
     public Person findById(int id) {
-        Person person;
-        person = jdbcTemplate.query("SELECT * FROM person WHERE person_id=?;", new Object[]{id}, new BeanPropertyRowMapper<>(Person.class))
+        Person person = jdbcTemplate.query("SELECT * FROM person WHERE person_id=?;", new Object[]{id}, new BeanPropertyRowMapper<>(Person.class))
         .stream().findAny().orElse(null);
-        System.out.println(person);
+
         return person;
     }
 
@@ -54,6 +53,7 @@ public class PersonDAO {
         List<Book> books = jdbcTemplate.query("SELECT name, author, year FROM book WHERE person_id=?",
                 new Object[]{id},
                 new BeanPropertyRowMapper<>(Book.class));
+
         return books;
     }
 }

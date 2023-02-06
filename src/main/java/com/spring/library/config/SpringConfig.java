@@ -55,8 +55,6 @@ public class SpringConfig implements WebMvcConfigurer {
         resolver.setTemplateEngine(templateEngine());
         //encoding on templates:
         resolver.setCharacterEncoding("UTF-8");
-//        resolver.setContentType("text/html; charset=UTF-8");
-
         registry.viewResolver(resolver);
     }
 

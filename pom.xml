@@ -82,16 +82,6 @@
       <version>6.2.5.Final</version>
     </dependency>
 
-
-    <!--    &lt;!&ndash; https://mvnrepository.com/artifact/jakarta.servlet/jakarta.servlet-api &ndash;&gt;-->
-<!--    <dependency>-->
-<!--      <groupId>jakarta.servlet</groupId>-->
-<!--      <artifactId>jakarta.servlet-api</artifactId>-->
-<!--      <version>6.0.0</version>-->
-<!--      <scope>provided</scope>-->
-<!--    </dependency>-->
-
-
   </dependencies>
   <build>
     <finalName>org.spring.library</finalName>
