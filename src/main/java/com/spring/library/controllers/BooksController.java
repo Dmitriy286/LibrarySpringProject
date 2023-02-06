@@ -83,11 +83,19 @@ public class BooksController {
     @PostMapping("/{id}")
     public String editBook(@PathVariable("id") int id, @ModelAttribute("book") @Valid Book book,
                            BindingResult bindingResult) {
+        System.out.println("Before validator");
         bookValidator.validate(book, bindingResult);
+        System.out.println("After validator");
+
         if (bindingResult.hasErrors()) {
+            System.out.println("Inside haserrors");
+            System.out.println(bindingResult.getAllErrors());
             return "books/edit";
         }
+        System.out.println("Before update");
         bookDAO.update(id, book);
+        System.out.println("After update");
+
         return "redirect:/books";
     }
 
