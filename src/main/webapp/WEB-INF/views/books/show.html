@@ -9,7 +9,6 @@
 <br>
 <div th:switch="${book.getPersonId()}">
     <div th:case="0">
-<!--        <div th:if="${book.getPersonId() == 0}">-->
         <span>Эта книга свободна. Кому назначить ее?</span>
         <form th:method="PATCH" th:action="@{/books/{id}/setbook(id=${book.getBookId()})}">
             <label for="person">Выберите человека</label>
@@ -21,7 +20,6 @@
         </form>
     </div>
 
-    <!--<div th:if="${book.getPersonId() > 0}">-->
     <div th:case="*">
         <div th:text="${'Книга сейчас у ' + person.getFullName()}"></div>
 

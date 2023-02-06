@@ -32,26 +32,21 @@ public class BooksController {
 
     @GetMapping()
     public String showAllBooks(Model model) {
-        System.out.println("Init show all books");
         List<Book> books;
         books = bookDAO.findAll();
-        for (Book b : books) {
-            System.out.println(b);
-        }
         model.addAttribute("books", books);
         return "books/show-all";
     }
 
     @GetMapping("/{id}")
     public String showBook(@PathVariable("id") int id, Model model, @ModelAttribute("emptyPerson") Person emptyPerson) {
-        Book book;
-        List<Person> people;
-        book = bookDAO.findById(id);
+        Book book = bookDAO.findById(id);
         Person person = personDAO.findById(book.getPersonId());
-        model.addAttribute("person", person);
-        people = personDAO.findAll();
+        List<Person> people = personDAO.findAll();
         model.addAttribute("book", book);
+        model.addAttribute("person", person);
         model.addAttribute("people", people);
+
         return "books/show";
     }
 
@@ -67,9 +62,8 @@ public class BooksController {
         if (bindingResult.hasErrors()) {
             return "books/new";
         }
-        System.out.println("Controller:");
-        System.out.println(book);
         bookDAO.save(book);
+
         return "redirect:/books";
     }
 
@@ -77,24 +71,18 @@ public class BooksController {
     public String getEditBookForm(@PathVariable("id") int id, Model model) {
         Book book = bookDAO.findById(id);
         model.addAttribute("book", book);
+
         return "books/edit";
     }
 
     @PostMapping("/{id}")
     public String editBook(@PathVariable("id") int id, @ModelAttribute("book") @Valid Book book,
                            BindingResult bindingResult) {
-        System.out.println("Before validator");
         bookValidator.validate(book, bindingResult);
-        System.out.println("After validator");
-
         if (bindingResult.hasErrors()) {
-            System.out.println("Inside haserrors");
-            System.out.println(bindingResult.getAllErrors());
             return "books/edit";
         }
-        System.out.println("Before update");
         bookDAO.update(id, book);
-        System.out.println("After update");
 
         return "redirect:/books";
     }
@@ -102,18 +90,21 @@ public class BooksController {
     @PostMapping("/{id}/delete")
     public String deleteBook(@PathVariable("id") int id) {
         bookDAO.delete(id);
+
         return "redirect:/books";
     }
 
     @PostMapping("/{id}/setbook")
     public String setBookToPerson(@PathVariable("id") int id, @ModelAttribute("emptyPerson") Person emptyPerson) {
         bookDAO.setToPerson(id, emptyPerson.getPersonId());
+
         return "redirect:/books/{id}";
     }
 
     @PostMapping("/{id}/returnbook")
     public String returnBook(@PathVariable("id") int id) {
         bookDAO.returnBook(id);
+
         return "redirect:/books/{id}";
     }
 }

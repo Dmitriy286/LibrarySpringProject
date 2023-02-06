@@ -1,7 +1,5 @@
 package com.spring.library.models;
 
-import javax.validation.constraints.AssertTrue;
-import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Pattern;
 
@@ -15,12 +13,6 @@ public class Person {
     public Person() {
 
     }
-
-//    public Person(int personId, String fullName, int yearOfBirth) {
-//        this.personId = personId;
-//        this.fullName = fullName;
-//        this.yearOfBirth = yearOfBirth;
-//    }
 
     public Person(String fullName, int yearOfBirth) {
         this.fullName = fullName;

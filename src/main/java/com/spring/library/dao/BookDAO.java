@@ -20,22 +20,16 @@ public class BookDAO {
     }
 
     public List<Book> findAll() {
-        System.out.println("Init find all books");
-        List<Book> books;
-        books = jdbcTemplate.query("SELECT * FROM book", new BeanPropertyRowMapper<>(Book.class));
-        System.out.println("After query");
-        for (Book b : books) {
-            System.out.println(b);
-        }
+        List<Book> books = jdbcTemplate.query("SELECT * FROM book", new BeanPropertyRowMapper<>(Book.class));
+
         return books;
     }
 
     public Book findById(int id) {
-        Book book;
-        book = jdbcTemplate.query("SELECT * FROM book WHERE book_id=?", new Object[]{id},
+        Book book = jdbcTemplate.query("SELECT * FROM book WHERE book_id=?", new Object[]{id},
                         new BeanPropertyRowMapper<>(Book.class)).
                 stream().findAny().orElse(null);
-        System.out.println(book);
+
         return book;
     }
 
@@ -46,8 +40,6 @@ public class BookDAO {
     }
 
     public void save(Book book) {
-        System.out.println("DAO:");
-        System.out.println(book);
         jdbcTemplate.update("INSERT INTO book (name, author, year) VALUES (?, ?, ?)",
                 book.getName(), book.getAuthor(), book.getYear());
 
